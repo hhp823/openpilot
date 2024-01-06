@@ -1,9 +1,11 @@
 [submodule "panda"]
   path = panda
-  url = ../../commaai/panda.git
+  url = ../../garrettpall/panda.git
+  branch = gm-gas
 [submodule "opendbc"]
   path = opendbc
-  url = ../../commaai/opendbc.git
+  url = ../../garrettpall/opendbc.git
+  branch = gm-gas
 [submodule "cereal"]
   path = cereal
   url = ../../commaai/cereal.git
