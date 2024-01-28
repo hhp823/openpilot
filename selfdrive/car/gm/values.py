@@ -75,6 +75,7 @@ class CAR(StrEnum):
   SILVERADO = "CHEVROLET SILVERADO 1500 2020"
   EQUINOX = "CHEVROLET EQUINOX 2019"
   TRAILBLAZER = "CHEVROLET TRAILBLAZER 2021"
+  SUBURBAN_2019 = "CHEVROLET SUBURBAN 2019"
 
 
 class Footnote(Enum):
@@ -117,6 +118,7 @@ CAR_INFO: Dict[str, Union[GMCarInfo, List[GMCarInfo]]] = {
   ],
   CAR.EQUINOX: GMCarInfo("Chevrolet Equinox 2019-22"),
   CAR.TRAILBLAZER: GMCarInfo("Chevrolet Trailblazer 2021-22"),
+  CAR.SUBURBAN_2019: GMCarInfo("Chevrolet Suburban 2019", "Adaptive Cruise Control (ACC) & LKAS"),
 }
 
 
@@ -150,6 +152,6 @@ DBC: Dict[str, Dict[str, str]] = defaultdict(lambda: dbc_dict('gm_global_a_power
 EV_CAR = {CAR.VOLT, CAR.BOLT_EUV}
 
 # We're integrated at the camera with VOACC on these cars (instead of ASCM w/ OBD-II harness)
-CAMERA_ACC_CAR = {CAR.BOLT_EUV, CAR.SILVERADO, CAR.EQUINOX, CAR.TRAILBLAZER}
+CAMERA_ACC_CAR = {CAR.BOLT_EUV, CAR.SILVERADO, CAR.EQUINOX, CAR.TRAILBLAZER, CAR.SUBURBAN_2019}
 
 STEER_THRESHOLD = 1.0

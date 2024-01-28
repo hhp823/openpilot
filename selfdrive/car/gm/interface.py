@@ -86,7 +86,7 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalTuning.kiBP = [0.]
 
     if candidate in CAMERA_ACC_CAR:
-      ret.experimentalLongitudinalAvailable = True
+      ret.experimentalLongitudinalAvailable = False
       ret.networkLocation = NetworkLocation.fwdCamera
       ret.radarUnavailable = True  # no radar
       ret.pcmCruise = True
@@ -101,10 +101,10 @@ class CarInterface(CarInterfaceBase):
       ret.vEgoStopping = 0.25
       ret.vEgoStarting = 0.25
 
-      if experimental_long:
-        ret.pcmCruise = False
-        ret.openpilotLongitudinalControl = True
-        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
+      #if experimental_long:
+      #  ret.pcmCruise = False
+      #  ret.openpilotLongitudinalControl = True
+      #  ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
 
     else:  # ASCM, OBD-II harness
       ret.openpilotLongitudinalControl = True
@@ -251,6 +251,18 @@ class CarInterface(CarInterfaceBase):
       ret.centerToFront = ret.wheelbase * 0.4
       ret.tireStiffnessFactor = 1.0
       ret.steerActuatorDelay = 0.2
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+
+
+    elif candidate == CAR.SUBURBAN_2019:
+      ret.mass = 5809. * CV.LB_TO_KG # average of suburban and yukon xl
+      ret.wheelbase = 3.3
+      ret.steerRatio = 17.3
+      ret.centerToFront = ret.wheelbase * 0.5
+      ret.tireStiffnessFactor = 1.0
+      # On the Bolt, the ECM and camera independently check that you are either above 5 kph or at a stop
+      # with foot on brake to allow engagement, but this platform only has that check in the camera.
+      # TODO: check if this is split by EV/ICE with more platforms in the future
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     return ret
