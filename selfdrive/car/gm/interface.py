@@ -257,7 +257,7 @@ class CarInterface(CarInterfaceBase):
     elif candidate == CAR.SUBURBAN_2019:
       ret.mass = 5809. * CV.LB_TO_KG # average of suburban and yukon xl
       ret.wheelbase = 2.94
-      ret.steerRatio = 15.5
+      ret.steerRatio = 17.3
       ret.centerToFront = ret.wheelbase * 0.5
       ret.tireStiffnessFactor = 1.0
       # On the Bolt, the ECM and camera independently check that you are either above 5 kph or at a stop
