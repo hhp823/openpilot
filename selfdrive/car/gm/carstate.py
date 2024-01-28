@@ -107,7 +107,7 @@ class CarState(CarStateBase):
     ret.cruiseState.enabled = pt_cp.vl["AcceleratorPedal2"]["CruiseState"] != AccState.OFF
     ret.cruiseState.standstill = pt_cp.vl["AcceleratorPedal2"]["CruiseState"] == AccState.STANDSTILL
     if self.CP.networkLocation == NetworkLocation.fwdCamera:
-      ret.cruiseState.speed = 96.5606 * CV.KPH_TO_MS
+      ret.cruiseState.speed = pt_cp.vl["ECMCruiseControl"]["CruiseSetSpeed"] * CV.KPH_TO_MS
       ret.stockAeb = cam_cp.vl["AEBCmd"]["AEBCmdActive"] != 0
       # openpilot controls nonAdaptive when not pcmCruise
       if self.CP.pcmCruise:
@@ -137,6 +137,7 @@ class CarState(CarStateBase):
       ("ECMPRDNL2", 40),
       ("PSCMStatus", 10),
       ("ESPStatus", 10),
+      ("ECMCruiseControl", 10),
       ("BCMDoorBeltStatus", 10),
       ("BCMGeneralPlatformStatus", 10),
       ("EBCMWheelSpdFront", 20),
