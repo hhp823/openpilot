@@ -70,7 +70,7 @@ class FrogPilotPlanner:
       self.lane_width_left = 0
       self.lane_width_right = 0
 
-    self.params_memory.put_float("CSLCSpeed", self.v_cruise * CV.MS_TO_MPH)
+    self.params_memory.put_int("CSLCSpeed", int(round(self.v_cruise * CV.MS_TO_MPH)))
 
   def update_v_cruise(self, carState, controlsState, modelData, enabled, v_cruise, v_ego):
     # Pfeiferj's Map Turn Speed Controller

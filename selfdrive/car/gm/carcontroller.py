@@ -263,7 +263,7 @@ def get_set_speed(self, hud_v_cruise):
   v_cruise = int(round(v_cruise_kph * CV.KPH_TO_MPH))
 
   v_cruise_slc: int = 0
-  v_cruise_slc = params_memory.get_float("CSLCSpeed")
+  v_cruise_slc = params_memory.get_int("CSLCSpeed")
 
   if v_cruise_slc > 0:
     v_cruise = v_cruise_slc
