@@ -155,8 +155,12 @@ class CarState(CarStateBase):
       ret.cruiseState.enabled = pt_cp.vl["ECMCruiseControl"]["CruiseActive"] != 0
 
     if self.CP.enableBsm:
-      ret.leftBlindspot = pt_cp.vl["BCMBlindSpotMonitor"]["LeftBSM"] == 1
-      ret.rightBlindspot = pt_cp.vl["BCMBlindSpotMonitor"]["RightBSM"] == 1
+      if self.CP.carFingerprint not in SDGM_CAR:
+        ret.leftBlindspot = pt_cp.vl["BCMBlindSpotMonitor"]["LeftBSM"] == 1
+        ret.rightBlindspot = pt_cp.vl["BCMBlindSpotMonitor"]["RightBSM"] == 1
+      else:
+        ret.leftBlindspot = cam_cp.vl["BCMBlindSpotMonitor"]["LeftBSM"] == 1
+        ret.rightBlindspot = cam_cp.vl["BCMBlindSpotMonitor"]["RightBSM"] == 1
 
     # Driving personalities function - Credit goes to Mangomoose!
     if frogpilot_variables.personalities_via_wheel and ret.cruiseState.available:
@@ -223,6 +227,8 @@ class CarState(CarStateBase):
           ("BCMGeneralPlatformStatus", 10),
           ("ASCMSteeringButton", 33),
         ]
+        if CP.enableBsm:
+          messages.append(("BCMBlindSpotMonitor", 10))
       else:
         messages += [
           ("AEBCmd", 10),
@@ -246,9 +252,6 @@ class CarState(CarStateBase):
       ("ECMAcceleratorPos", 80),
     ]
 
-    if CP.enableBsm:
-      messages.append(("BCMBlindSpotMonitor", 10))
-
     if CP.carFingerprint in SDGM_CAR:
       messages += [
         ("ECMPRDNL2", 40),
@@ -265,6 +268,8 @@ class CarState(CarStateBase):
         ("BCMGeneralPlatformStatus", 10),
         ("ASCMSteeringButton", 33),
       ]
+      if CP.enableBsm:
+        messages.append(("BCMBlindSpotMonitor", 10))
 
     # Used to read back last counter sent to PT by camera
     if CP.networkLocation == NetworkLocation.fwdCamera:
