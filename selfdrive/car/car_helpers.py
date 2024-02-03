@@ -214,7 +214,7 @@ def crash_log(candidate):
     "ConditionalExperimental", "CESpeed", "CESpeedLead", "CECurves", "CECurvesLead", "CENavigation", "CESlowerLead", "CEStopLights",
     "CEStopLightsLead", "CESignal", "CustomPersonalities", "AggressiveFollow", "AggressiveJerk", "StandardFollow", "StandardJerk",
     "RelaxedFollow", "RelaxedJerk", "DeviceShutdown", "ExperimentalModeActivation", "ExperimentalModeViaLKAS", "ExperimentalModeViaScreen",
-    "FireTheBabysitter", "NoLogging", "MuteDM", "MuteDoor", "MuteSeatbelt", "MuteOverheated", "OfflineMode", "LateralTune", "NNFF", "SteerRatio",
+    "FireTheBabysitter", "NoLogging", "MuteDM", "MuteDoor", "MuteSeatbelt", "MuteOverheated", "OfflineMode", "LateralTune", "NNFF", "SteerRatio", "UseLateralJerk",
     "LongitudinalTune", "AccelerationProfile", "AggressiveAcceleration", "StoppingDistance", "SmoothBraking", "Model", "MTSCEnabled",
     "MTSCAggressiveness", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection", "OneLaneChange", "QOLControls", "DisableOnroadUploads",
     "HigherBitrate", "NavChill", "PauseLateralOnSignal", "ReverseCruise", "ReverseCruiseUI", "SetSpeedOffset", "SpeedLimitController", "Offset1",

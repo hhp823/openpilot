@@ -198,7 +198,8 @@ class CarInterfaceBase(ABC):
     # FrogPilot variables
     params = Params()
 
-    self.has_lateral_torque_nn = self.initialize_lat_torque_nn(CP.carFingerprint, eps_firmware) and params.get_bool("LateralTune") and params.get_bool("NNFF")
+    self.has_lateral_torque_nn = self.initialize_lat_torque_nn(CP.carFingerprint, eps_firmware) and params.get_bool("NNFF") and params.get_bool("LateralTune")
+    self.use_lateral_jerk = params.get_bool("UseLateralJerk") and params.get_bool("LateralTune")
 
     self.belowSteerSpeed_shown = False
     self.disable_belowSteerSpeed = False
