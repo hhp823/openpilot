@@ -169,7 +169,6 @@ def manager_init() -> None:
     ("TurnAggressiveness", "150" if FrogsGoMoo else "100"),
     ("TurnDesires", "1" if FrogsGoMoo else "0"),
     ("UnlimitedLength", "1"),
-    ("UseLateralJerk", "0"),
     ("UseSI", "1" if FrogsGoMoo else "0"),
     ("UseVienna", "0"),
     ("VisionTurnControl", "1"),
