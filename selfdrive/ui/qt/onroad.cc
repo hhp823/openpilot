@@ -1176,7 +1176,7 @@ void AnnotatedCameraWidget::updateFrogPilotWidgets(QPainter &p) {
   conditionalSpeed = scene.conditional_speed;
   conditionalSpeedLead = scene.conditional_speed_lead;
   conditionalStatus = scene.conditional_status;
-  cruiseAdjustment = fmax((0.1 * fmax(setSpeed - scene.adjusted_cruise, 0) + 0.9 * cruiseAdjustment) - 1, 0);
+  cruiseAdjustment = fmax(setSpeed - scene.adjusted_cruise, 0);
   customColors = scene.custom_colors;
   experimentalMode = scene.experimental_mode;
   fullMapOpen = mapOpen && scene.full_map;
