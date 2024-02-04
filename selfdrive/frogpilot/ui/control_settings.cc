@@ -237,7 +237,7 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPil
 
     } else if (param == "Model") {
       modelSelectorButton = new FrogPilotButtonIconControl(title, tr("SELECT"), desc, icon);
-      QStringList models = {"Los Angeles (Default)"};
+      QStringList models = {"Los Angeles (Default)", "Certified Herbalist"};
       QObject::connect(modelSelectorButton, &FrogPilotButtonIconControl::clicked, this, [this, models]() {
         int currentModel = params.getInt("Model");
         QString currentModelLabel = models[currentModel];
