@@ -240,7 +240,7 @@ class CarController:
         if CC.enabled and self.frame % 3 == 0 and CS.cruise_buttons == CruiseButtons.UNPRESS and not CS.out.gasPressed:
           bus = CanBus.CAMERA if self.CP.carFingerprint in SDGM_CAR else CanBus.POWERTRAIN
           slcSet = get_set_speed(self, hud_v_cruise)
-          can_sends.extend([gmcan.create_gm_acc_spam_command(self.packer_pt, self, CS, slcSet, bus)] * 5)
+          can_sends.extend(gmcan.create_gm_acc_spam_command(self.packer_pt, self, CS, slcSet, bus))
 
     if self.CP.networkLocation == NetworkLocation.fwdCamera:
       # Silence "Take Steering" alert sent by camera, forward PSCMStatus with HandsOffSWlDetectionStatus=1
