@@ -4,6 +4,9 @@ from openpilot.common.conversions import Conversions as CV
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.car import make_can_msg
 from openpilot.selfdrive.car.gm.values import CAR, CruiseButtons, CanBus
+from openpilot.common.params import Params
+
+params = Params("/dev/shm/params")
 
 
 def create_buttons(packer, bus, idx, button):
@@ -255,8 +258,8 @@ def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus):
   byfive = 0
   speedSetPoint = int(round(CS.out.cruiseState.speed * CV.MS_TO_MPH))
 
-  FRAMES_ON = 12
-  FRAMES_OFF = 18
+  FRAMES_ON = int(round(params.get_float("FramesOn")))
+  FRAMES_OFF = 30 - FRAMES_ON
 
   if slcSet <= int(math.floor((speedSetPoint - 1)/5.0)*5.0) and speedSetPoint > 20:
     cruiseBtn = CruiseButtons.DECEL_SET
@@ -277,6 +280,6 @@ def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus):
   if (cruiseBtn != CruiseButtons.INIT) and controller.frame % (FRAMES_ON + FRAMES_OFF) < FRAMES_ON:
     controller.last_button_frame = controller.frame
     idx = (CS.buttons_counter + 1) % 4
-    return [create_buttons_five(packer, bus, idx, cruiseBtn, byfive)]*10
+    return [create_buttons_five(packer, bus, idx, cruiseBtn, byfive)]*int(round(params.get_float("NoOfMes")))
   else:
     return []
