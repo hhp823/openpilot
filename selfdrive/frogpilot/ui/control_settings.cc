@@ -63,9 +63,6 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPil
     {"SLCOverride", "Override Method", "Choose your preferred method to override the current speed limit.", ""},
 
     {"TurnDesires", "Use Turn Desires", "Use turn desires for enhanced precision in turns below the minimum lane change speed.", "../assets/navigation/direction_continue_right.png"},
-    
-    {"NoOfMes", "Number of Messages", "", ""},
-    {"FramesOn", "Number of Frames On", "", ""},
 
     {"VisionTurnControl", "Vision Turn Speed Controller", "Slow down for detected road curvature for smoother curve handling.", "../frogpilot/assets/toggle_icons/icon_vtc.png"},
     {"CurveSensitivity", "Curve Detection Sensitivity", "Set curve detection sensitivity. Higher values prompt earlier responses, lower values lead to smoother but later reactions.", ""},
@@ -80,11 +77,6 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPil
       std::vector<QString> adjustablePersonalitiesNames{tr("Distance Button"), tr("Screen")};
       toggle = new FrogPilotParamToggleControl(param, title, desc, icon, adjustablePersonalitiesToggles, adjustablePersonalitiesNames);
 
-    } else if (param == "NoOfMes") {
-      toggle = new FrogPilotParamValueControl(param, title, desc, icon, 1, 25, std::map<int, QString>(), this, false, "%");
-    } else if (param == "FramesOn") {
-      toggle = new FrogPilotParamValueControl(param, title, desc, icon, 1, 30, std::map<int, QString>(), this, false, "%");
-    
     } else if (param == "AlwaysOnLateral") {
       std::vector<QString> aolToggles{"AlwaysOnLateralMain"};
       std::vector<QString> aolToggleNames{tr("Enable On Cruise Main")};
