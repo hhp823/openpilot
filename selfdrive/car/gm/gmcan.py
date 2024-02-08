@@ -255,8 +255,8 @@ def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus):
   byfive = 0
   speedSetPoint = int(round(CS.out.cruiseState.speed * CV.MS_TO_MPH))
 
-  FRAMES_ON = 9
-  FRAMES_OFF = 18
+  FRAMES_ON = 6
+  FRAMES_OFF = 30 - FRAMES_ON
 
   if slcSet <= int(math.floor((speedSetPoint - 1)/5.0)*5.0) and speedSetPoint > 20:
     cruiseBtn = CruiseButtons.DECEL_SET
