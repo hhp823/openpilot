@@ -76,7 +76,7 @@ class FrogPilotPlanner:
     # Pfeiferj's Map Turn Speed Controller
     if self.map_turn_speed_controller:
       self.mtsc_target = np.clip(self.mtsc.target_speed(v_ego, carState.aEgo), MIN_TARGET_V, v_cruise)
-      if self.mtsc_target / v_ego < 0.25:
+      if self.mtsc_target / v_ego < 0.50:
         self.mtsc_target = v_cruise
     else:
       self.mtsc_target = v_cruise
