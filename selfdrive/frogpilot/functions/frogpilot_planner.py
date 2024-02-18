@@ -81,6 +81,8 @@ class FrogPilotPlanner:
         self.mtsc_target = v_cruise
       if v_ego - self.mtsc_limit > self.mtsc_target:
         self.mtsc_target = v_cruise
+      if self.mtsc_target < 12 * CV.MPH_TO_MS:
+        self.mtsc_target = v_cruise
     else:
       self.mtsc_target = v_cruise
 
