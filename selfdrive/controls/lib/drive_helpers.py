@@ -142,6 +142,8 @@ class VCruiseHelper:
     if self.CP.pcmCruise and not frogpilot_variables.CSLC:
       return
 
+    SpeedLimitController.update_current_max_velocity(self.v_cruise_kph)
+
     # CSLC resume/set logic
     if frogpilot_variables.CSLC:
       if SpeedLimitController.desired_speed_limit != 0 and frogpilot_variables.set_speed_limit and self.v_cruise_kph_last > 250:
