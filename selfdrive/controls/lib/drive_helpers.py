@@ -55,7 +55,7 @@ class VCruiseHelper:
     self.v_cruise_kph_last = self.v_cruise_kph
 
     if CS.cruiseState.available:
-      if not self.CP.pcmCruise:
+      if not self.CP.pcmCruise or frogpilot_variables.CSLC:
         # if stock cruise is completely disabled, then we can use our own set speed logic
         self._update_v_cruise_non_pcm(CS, enabled, is_metric, frogpilot_variables)
         self.v_cruise_cluster_kph = self.v_cruise_kph
@@ -139,7 +139,16 @@ class VCruiseHelper:
 
   def initialize_v_cruise(self, CS, experimental_mode: bool, conditional_experimental_mode, frogpilot_variables) -> None:
     # initializing is handled by the PCM
-    if self.CP.pcmCruise:
+    if self.CP.pcmCruise and not frogpilot_variables.CSLC:
+      return
+
+    # CSLC resume/set logic
+    if frogpilot_variables.CSLC:
+      if SpeedLimitController.desired_speed_limit != 0 and frogpilot_variables.set_speed_limit and self.v_cruise_kph_last > 250:
+        self.v_cruise_kph = SpeedLimitController.desired_speed_limit * CV.MS_TO_KPH
+      else: # Resume or set to match cars set speed to avoid harsh enables when car's and OP's speeds don't match
+        self.v_cruise_kph = CS.cruiseState.speed * CV.MS_TO_KPH
+      self.v_cruise_cluster_kph = self.v_cruise_kph
       return
 
     if conditional_experimental_mode:

@@ -246,6 +246,8 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"ConditionalExperimental", PERSISTENT},
     {"CrosstrekTorque", PERSISTENT},
     {"CurrentRandomEvent", PERSISTENT},
+    {"CSLCEnabled", PERSISTENT},
+    {"CSLCSpeed", PERSISTENT},
     {"CurveSensitivity", PERSISTENT},
     {"CustomAlerts", PERSISTENT},
     {"CustomColors", PERSISTENT},
