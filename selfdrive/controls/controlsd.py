@@ -938,6 +938,7 @@ class Controls:
     controlsState.forceDecel = bool(force_decel)
     controlsState.canErrorCounter = self.can_rcv_cum_timeout_counter
     controlsState.experimentalMode = self.experimental_mode
+    self.frogpilot_variables.experimentalMode = self.experimental_mode
 
     lat_tuning = self.CP.lateralTuning.which()
     if self.joystick_mode:

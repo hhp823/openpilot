@@ -12,6 +12,10 @@ from openpilot.selfdrive.car.gm.values import CAR, CruiseButtons, CarControllerP
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase, TorqueFromLateralAccelCallbackType, FRICTION_THRESHOLD, LatControlInputs, NanoFFModel
 from openpilot.selfdrive.controls.lib.drive_helpers import get_friction
 
+from openpilot.common.params import Params
+
+params_memory = Params("/dev/shm/params")
+
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
 GearShifter = car.CarState.GearShifter
@@ -132,6 +136,19 @@ class CarInterface(CarInterfaceBase):
       ret.vEgoStopping = 0.25
       ret.vEgoStarting = 0.25
 
+      if params_memory.get_bool("CSLCEnabled"):
+        ret.openpilotLongitudinalControl = True
+        ret.longitudinalTuning.deadzoneBP = [0.]
+        ret.longitudinalTuning.deadzoneV = [0.56]  # == 2 km/h/s, 1.25 mph/s
+        ret.stoppingDecelRate = 11.18  # == 25 mph/s (.04 rate)
+        ret.longitudinalActuatorDelayLowerBound = 1.  # TODO: measure this
+        ret.longitudinalActuatorDelayUpperBound = 2.
+
+        ret.longitudinalTuning.kpBP = [10.7, 10.8, 28.]  # 10.7 m/s == 24 mph
+        ret.longitudinalTuning.kpV = [0., 20., 20.]  # set lower end to 0 since we can't drive below that speed
+        ret.longitudinalTuning.kiBP = [0.]
+        ret.longitudinalTuning.kiV = [0.1]
+
       if candidate in SLOW_ACC and params.get_bool("GasRegenCmd"):
         ret.longitudinalTuning.kpV = [1.5, 1.125]
         ret.stopAccel = -0.25
@@ -149,6 +166,19 @@ class CarInterface(CarInterfaceBase):
       ret.minEnableSpeed = -1.  # engage speed is decided by ASCM
       ret.minSteerSpeed = 30 * CV.MPH_TO_MS
       ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_SDGM
+
+      if params_memory.get_bool("CSLCEnabled"):
+        ret.openpilotLongitudinalControl = True
+        ret.longitudinalTuning.deadzoneBP = [0.]
+        ret.longitudinalTuning.deadzoneV = [0.56]  # == 2 km/h/s, 1.25 mph/s
+        ret.stoppingDecelRate = 11.18  # == 25 mph/s (.04 rate)
+        ret.longitudinalActuatorDelayLowerBound = 1.  # TODO: measure this
+        ret.longitudinalActuatorDelayUpperBound = 2.
+
+        ret.longitudinalTuning.kpBP = [10.7, 10.8, 28.]  # 10.7 m/s == 24 mph
+        ret.longitudinalTuning.kpV = [0., 20., 20.]  # set lower end to 0 since we can't drive below that speed
+        ret.longitudinalTuning.kiBP = [0.]
+        ret.longitudinalTuning.kiV = [0.1]
 
     else:  # ASCM, OBD-II harness
       ret.openpilotLongitudinalControl = True

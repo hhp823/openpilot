@@ -116,7 +116,7 @@ class CarController:
       idx = self.lka_steering_cmd_counter % 4
       can_sends.append(gmcan.create_steering_control(self.packer_pt, CanBus.POWERTRAIN, apply_steer, idx, CC.latActive))
 
-    if self.CP.openpilotLongitudinalControl:
+    if self.CP.openpilotLongitudinalControl and not frogpilot_variables.CSLC:
       # Gas/regen, brakes, and UI commands - all at 25Hz
       if self.frame % 4 == 0:
         stopping = actuators.longControlState == LongCtrlState.stopping
@@ -242,7 +242,7 @@ class CarController:
         if CC.enabled and self.frame % 3 == 0 and CS.cruise_buttons == CruiseButtons.UNPRESS and not CS.out.gasPressed:
           bus = CanBus.CAMERA if self.CP.carFingerprint in SDGM_CAR else CanBus.POWERTRAIN
           slcSet = get_set_speed(self, hud_v_cruise)
-          can_sends.extend(gmcan.create_gm_acc_spam_command(self.packer_pt, self, CS, slcSet, bus, CS.out.vEgo))
+          can_sends.extend(gmcan.create_gm_acc_spam_command(self.packer_pt, self, CS, slcSet, bus, CS.out.vEgo, frogpilot_variables.experimentalMode, accel))
 
     if self.CP.networkLocation == NetworkLocation.fwdCamera:
       # Silence "Take Steering" alert sent by camera, forward PSCMStatus with HandsOffSWlDetectionStatus=1

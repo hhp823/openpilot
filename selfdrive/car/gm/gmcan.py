@@ -250,7 +250,7 @@ def create_gm_cc_spam_command(packer, controller, CS, actuators):
   else:
     return []
 
-def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus, Vego):
+def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus, Vego, experimentalMode, accel):
   cruiseBtn = CruiseButtons.INIT
   byfive = 0
   speedSetPoint = int(round(CS.out.cruiseState.speed * CV.MS_TO_MPH))
@@ -258,9 +258,12 @@ def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus, Vego):
   FRAMES_ON = 6
   FRAMES_OFF = 30 - FRAMES_ON
 
-  if slcSet + 5 < Vego * CV.MS_TO_MPH:
-    slcSet = slcSet - 10
-
+  if not experimentalMode:
+    if slcSet + 5 < Vego * CV.MS_TO_MPH:
+      slcSet = slcSet - 10
+  else:
+    slcSet = int(round(Vego * CV.MS_TO_MPH + accel * 10))
+  
   if slcSet <= int(math.floor((speedSetPoint - 1)/5.0)*5.0) and speedSetPoint > 20:
     cruiseBtn = CruiseButtons.DECEL_SET
     byfive = 1
